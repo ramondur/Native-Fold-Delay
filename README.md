@@ -2,9 +2,8 @@
 
 This repository provides tools for calculating the **Native Fold Delay (NFD)** of any protein using an R notebook (`FoldDelay.Rmd`). Below is an overview of the contents and instructions for use.
 
-In addition, it also contaisn two two datasets with NFD profiles for the *Saccharomyces cerevisiae* (Yeast) and *Escherichia coli* (E. coli) proteomes. 
-Both datasets can be found within **`Duran&Houben2025/`**
-These datasets were used in the publication: *"Native Fold Delay and its implications for co-translational chaperone binding and protein aggregation" (Duran & Houben, 2025).*
+In addition, it also contaisn two  datasets with NFD profiles for the *Saccharomyces cerevisiae* (Yeast) and *Escherichia coli* (E. coli) proteomes within **`Duran&Houben2025/`** folder.
+Both datasets were used in the publication: "Native Fold Delay and its implications for co-translational chaperone binding and protein aggregation" (Duran & Houben, 2025).
 
 ## Run NFD tool
 
@@ -13,7 +12,8 @@ These datasets were used in the publication: *"Native Fold Delay and its implica
      Download the latest version here: [RStudio Desktop](https://posit.co/download/rstudio-desktop/).
 
 2. **Instructions for Use**
-   - Download the repository.
+   - Download and unzip the repository.
+   - Open the **`NativeFoldDelay_tool/`** folder.
    - Place the PDB file of the protein to analyze in the `Structures/` folder (preferentially and AlphaFold protein structure).  
    - Open `FoldDelay.Rmd` in RStudio and follow the instructions within the notebook to perform your analysis.  
    - Results will be automatically saved in the `Output/` folder.
