@@ -13,15 +13,15 @@ You can run the following following chunk by pressing the green play symbol belo
 
 ```{r}
 #Set the PDB file name of the protein you want to analyse (must be in the folder "Structures")
-pdb_file_name <- "AF-P23869-F1-model_v4.pdb"
-#Set translation rate for calculation of secondary axis
+pdb_file_name <- "AF-P23869-F1-model_v6.pdb"
+#Set average translation rate 
 transrate <- 20
 ```
 
 This chunk installs and loads all the necessary R packages.
 
 ```{r}
-list.of.packages <- c("ggplot2", "bio3d", "circlize", "dplyr", "tidyr", "RColorBrewer", "stringr", "tibble","ggpubr")
+list.of.packages <- c("ggplot2", "bio3d", "circlize", "dplyr", "tidyr", "RColorBrewer", "stringr", "tibble","ggpubr","jsonlite")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 library(ggplot2)
@@ -33,6 +33,7 @@ library(RColorBrewer)
 library(stringr)
 library(tibble)
 library(ggpubr)
+library(jsonlite)
 code3 <- c("ALA", "ARG", "ASN", "ASP", "CYS", "GLU", "GLN", "GLY", "HIS", 
            "ILE", "LEU", "LYS", "MET", "PHE", "PRO", "SER", "THR", "TRP", 
            "TYR", "VAL","H1S","H2S","TPO","PTR","SEP","HYP")
@@ -86,9 +87,9 @@ simple <- simple %>%
   arrange(index_1)
 ```
 
-The next chunk of code calculates the FoldDelay of a protein. In other words, it calculates the number of residues that need to be synthesized before residue (i) can engage with all its native interaction partners. FD can also be expressed in time units by factoring the decoding times (tdec) of the different residues between i and j (here we are using an average decoding time for all residues).
+The next chunk of code calculates the Native Fold Delay (NFD) of a protein. In other words, it calculates the number of residues that need to be synthesized before residue (i) can engage with all its native interaction partners. NFD can also be expressed in time units by factoring the translation rates of the different residues between i and j (here we are using an average translation rate for all residues).
 
-The output of this code is a contact map plot (contact_map_nopae) showing the furthest away C-terminal interactor of every residue and the per-residue FD profile of our protein (folddelay_profile_nopae and folddelay_table_nopae).
+The output of this code is a contact map plot (contact_map_nopae) showing the furthest away C-terminal interactor of every residue and the per-residue NFD profile of our protein (folddelay_profile_nopae and folddelay_table_nopae).
 
 Note that this chunk does not filter out any interactions (Filtering based on PAE is not applied).
 
@@ -142,9 +143,9 @@ write.table(fold_delay_nopae, file = paste0("Output/",output_file,"/folddelay_ta
             row.names = FALSE, col.names = TRUE, qmethod = c("escape", "double"))
 ```
 
-This chunk, as the one above, calculates the FoldDelay of a protein. However, here interactions are filtered using the Predicted Aligned Error (PAE) metric from AlphaFold. We used this metric to filter out interactions between residues whose relative positions concerning each other are predicted with low confidence since these interactions most probably do not occur in the actual structure. Therefore, this code only works with AlphaFold models.
+This chunk, as the one above, calculates the Native Fold Delay of a protein. However, here interactions are filtered using the Predicted Aligned Error (PAE) metric from AlphaFold. We used this metric to filter out interactions between residues whose relative positions concerning each other are predicted with low confidence since these interactions most probably do not occur in the actual structure. Therefore, this code only works with AlphaFold models.
 
-The output of this code is a contact map plot (contact_map_pae) showing the furthest away C-terminal interactor of every residue and the per-residue FD profile of our protein (folddelay_profile_pae and folddelay_table_pae). 
+The output of this code is a contact map plot (contact_map_pae) showing the furthest away C-terminal interactor of every residue and the per-residue NFD profile of our protein (folddelay_profile_pae and folddelay_table_pae). 
 
 Note that for the example protein provided, both the FD profiles with and without PAE filtering are the same. This is because the structure of this single domain protein is predicted with high confidence.
 
@@ -153,11 +154,10 @@ output_file <- strsplit(pdb_file_name, "[.]")[[1]][1]
 dir.create(file.path(paste0("Output/",output_file)), showWarnings = FALSE)
 #Download PAE file and make a matrix
 uniprot_id_current <- strsplit(output_file, "-")[[1]][2]
-url <- paste0("https://alphafold.ebi.ac.uk/files/AF-",uniprot_id_current,"-F1-predicted_aligned_error_v4.json")
+version_current <- strsplit(output_file, "_")[[1]][2]
+url <- paste0("https://alphafold.ebi.ac.uk/files/AF-",uniprot_id_current,"-F1-predicted_aligned_error_",version_current,".json")
 download.file(url, paste("tmp/", "pae_file.json", sep = ""), mode = "wb")
-pae_file <- read.table("~/Documents/PhD/Projects/FoldDelay/FoldDelay_2024/tmp/pae_file.json", quote="\"", comment.char="")
-pae_file <- pae_file$V1
-json_data <- fromJSON(pae_file)
+json_data <- fromJSON("tmp/pae_file.json")
 json_matrix <- json_data$predicted_aligned_error[[1]]
 #Filter out interactions with an expected position error (based on PAE) > 6 Å.
 simple$flag <- "No" 
