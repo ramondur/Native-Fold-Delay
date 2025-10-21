@@ -27,3 +27,8 @@ Currently, PAE filtering is supported only for AlphaFold structures downloaded f
 ## Contact Information
 For any questions or further information, please contact: [ramonenrique.duranromana@kuleuven.be](mailto:ramonenrique.duranromana@kuleuven.be)
 
+## References
+If you use this repository, please cite:
+Duran-Romana, R. et al. Native fold delay and its implications for co-translational chaperone binding and protein aggregation. Nature Communications 16, 1673 (2025). https://doi.org/10.1038/s41467-025-57033-z
+
+
