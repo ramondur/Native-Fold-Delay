@@ -14,7 +14,7 @@ Both datasets were used in the publication: "Native Fold Delay and its implicati
 2. **Instructions for Use**
    - Download and unzip the repository.
    - Open the **`NativeFoldDelay_tool/`** folder.
-   - Place the PDB file of the protein to analyze in the `Structures/` folder (preferentially and AlphaFold protein structure).  
+   - Place the PDB file of the protein to analyze in the `Structures/` folder (preferentially an AlphaFold protein structure).  
    - Open `FoldDelay.Rmd` in RStudio and follow the instructions within the notebook to perform your analysis.  
    - Results will be automatically saved in the `Output/` folder.
   
