@@ -14,12 +14,15 @@ Both datasets were used in the publication: "Native Fold Delay and its implicati
 2. **Instructions for Use**
    - Download and unzip the repository.
    - Open the **`NativeFoldDelay_tool/`** folder.
-   - Place the PDB file of the protein to analyze in the `Structures/` folder (preferentially an AlphaFold protein structure).  
+   - Place the PDB file of the protein to analyze in the `Structures/` folder (preferentially an AlphaFold protein structure obtained from https://alphafold.ebi.ac.uk).  
    - Open `FoldDelay.Rmd` in RStudio and follow the instructions within the notebook to perform your analysis.  
    - Results will be automatically saved in the `Output/` folder.
   
 ### Case Study
 To help you get started, we provide a case study using the AlphaFold model of the *E. coli* protein **Peptidyl-prolyl cis-trans isomerase B**, included in this repository.
+
+### Important
+Currently, PAE filtering is supported only for AlphaFold structures downloaded from the AlphaFold Protein Structure Database (https://alphafold.ebi.ac.uk) using version 6, which is the current release.
 
 ## Contact Information
 For any questions or further information, please contact: [ramonenrique.duranromana@kuleuven.be](mailto:ramonenrique.duranromana@kuleuven.be)
