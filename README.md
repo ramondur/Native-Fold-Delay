@@ -5,6 +5,8 @@ This repository provides tools for calculating the **Native Fold Delay (NFD)** o
 In addition, it also contaisn two  datasets with NFD profiles for the *Saccharomyces cerevisiae* (Yeast) and *Escherichia coli* (E. coli) proteomes within **`Duran&Houben2025/`** folder.
 Both datasets were used in the publication: "Native Fold Delay and its implications for co-translational chaperone binding and protein aggregation" (Duran & Houben, 2025).
 
+> **Note:** For calculating the NFD of single proteins you can try our web server: https://folddelay.switchlab.org.
+
 ## Run NFD tool
 
 1. **Software Requirements**  
