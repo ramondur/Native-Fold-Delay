@@ -33,7 +33,7 @@ When executed, the script performs the following steps:
    Automatically downloads AlphaFold models and their corresponding Predicted Aligned Error (PAE) matrices from the AlphaFold Database for the provided UniProt IDs.
 
 2. **Contact identification**  
-   Identifies all residue–residue contacts within a specified distance cutoff (default: 6 Å), considering only N-terminal to C-terminal residue pairs.
+   Identifies all residue-residue contacts within a specified distance cutoff (default: 6 Å), considering only N-terminal to C-terminal residue pairs.
 
 3. **Native Fold Delay estimation**  
    For each contact, estimates the minimal time required for its formation by:
@@ -101,7 +101,7 @@ Rscript FoldDelay_script.R --input yeast_uniprot_ids.txt --transrate 4 --distanc
 
 ### Output
 
-The script produces a single CSV file, folddelay.csv, written to the current working directory. Each row represents a predicted residue–residue contact used in the Native Fold Delay calculation.
+The script produces a single CSV file, folddelay.csv, written to the current working directory. Each row represents a predicted residue-residue contact used in the Native Fold Delay calculation.
 The output contains the following columns:
 
 - **Index_1:** Index of the N-terminal residue involved in the contact
