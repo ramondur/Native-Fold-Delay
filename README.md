@@ -101,18 +101,21 @@ Rscript FoldDelay_script.R --input yeast_uniprot_ids.txt --transrate 4 --distanc
 
 ### Output
 
-The script generates an output CSV file with residue–residue contacts with the following columns:
+The script produces a single CSV file, folddelay.csv, written to the current working directory. Each row represents a predicted residue–residue contact used in the Native Fold Delay calculation.
+The output contains the following columns:
 
-- **Index_1:** N-ter residue index
-- **Aa_1:** N-ter residue amino acid identity
-- **Index_2:** C-ter residue index
-- **Aa_2:** C-ter residue amino acid identity
-- **Distance:** Distance between the two residues in the primary sequence (aa)
-- **Time:** Estimated NFD time
-- **Cath_label:** Domain label (CATH label)
-- **Domain_id:** Domain id
-- **Scope:** Domain interaction type (intra- or inter-domain)
-
+- **Index_1:** Index of the N-terminal residue involved in the contact
+- **Aa_1:** Amino acid identity of the N-terminal residue
+- **Index_2:** Index of the C-terminal residue involved in the contact
+- **Aa_2:** Amino acid identity of the C-terminal residue
+- **Distance:** Sequence separation between the two residues (in amino acids)
+- **Time:** Estimated Native Fold Delay (NFD) time for the contact, based on the specified translation rate
+- **Cath_label:** CATH domain classification assigned to the residue
+- **Domain_id:** Numeric identifier of the domain to which the residue belongs
+- **Scope:** Domain interaction type:
+  - `intra` — both residues belong to the same domain  
+  - `inter` — residues belong to different domains
+    
 ---
 
 ## Contact
