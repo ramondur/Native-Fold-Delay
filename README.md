@@ -1,36 +1,122 @@
 # Native Fold Delay (NFD)
 
-This repository provides tools for calculating the **Native Fold Delay (NFD)** of any protein using an R notebook (`FoldDelay.Rmd`). Below is an overview of the contents and instructions for use.
+This repository provides an R script to calculate Native Fold Delay (NFD) for proteins at proteome scale. The workflow is designed for AlphaFold-predicted structures and therefore requires UniProt identifiers to automatically retrieve the correct models and metadata.
 
-In addition, it also contaisn two  datasets with NFD profiles for the *Saccharomyces cerevisiae* (Yeast) and *Escherichia coli* (E. coli) proteomes within **`Duran&Houben2025/`** folder.
-Both datasets were used in the publication: "Native Fold Delay and its implications for co-translational chaperone binding and protein aggregation" (Duran & Houben, 2025).
+For users interested in single-protein analysis, including non-AlphaFold PDB structures, we also provide an interactive web server:
 
-**Note: For calculating the NFD of single proteins you can try our web server: https://folddelay.switchlab.org.** 
+🔗 https://folddelay.switchlab.org
 
-## Run NFD tool
+The web server supports NFD calculation as well as interactive analysis and visualization of the results.
 
-1. **Software Requirements**  
-   - Install **R** and **RStudio** to execute the code in the R notebook.  
-     Download the latest version here: [RStudio Desktop](https://posit.co/download/rstudio-desktop/).
+---
 
-2. **Instructions for Use**
-   - Download and unzip the repository.
-   - Open the **`NativeFoldDelay_tool/`** folder.
-   - Place the PDB file of the protein to analyze in the `Structures/` folder (preferentially an AlphaFold protein structure obtained from the AlphaFold Protein Structure Database https://alphafold.ebi.ac.uk).  
-   - Open `FoldDelay.Rmd` in RStudio and follow the instructions within the notebook to perform your analysis.  
-   - Results will be automatically saved in the `Output/` folder.
-  
-### Case Study
-To help you get started, we provide a case study using the AlphaFold model of the *E. coli* protein **Peptidyl-prolyl cis-trans isomerase B**, included in this repository.
+## Repository Contents
 
-### Important
-Currently, PAE filtering is supported only for AlphaFold structures downloaded from the AlphaFold Protein Structure Database (https://alphafold.ebi.ac.uk) using version 6, which is the current release.
+- `FoldDelay_script_new.R`  
+  Main R script for large-scale NFD calculations using AlphaFold structures.
 
-## Contact Information
+- `Duran&Houben2025/`  
+  Precomputed NFD datasets for:
+  - *Saccharomyces cerevisiae* (yeast)
+  - *Escherichia coli*  
+
+  These datasets were used in the publication:  
+  **Duran & Houben (2025)**, *Native Fold Delay and its implications for co-translational chaperone binding and protein aggregation*.
+
+---
+
+## What the Script Does
+
+When executed, the script performs the following steps:
+
+1. **Structure Retrieval**  
+   Automatically downloads AlphaFold models and their corresponding Predicted Aligned Error (PAE) matrices from the AlphaFold Database for the provided UniProt IDs.
+
+2. **Contact Identification**  
+   Identifies all residue–residue contacts within a specified distance cutoff (default: 6 Å), considering only N-terminal to C-terminal residue pairs.
+
+3. **Native Fold Delay Estimation**  
+   For each contact, estimates the minimal time required for its formation by:
+   - Computing the sequence separation between residues
+   - Converting this separation into time using a global translation rate (default: 5 aa/s)
+
+4. **Confidence Filtering**  
+   Contacts are filtered using PAE values to remove residue pairs with low positional confidence, reducing false-positive interactions.
+
+5. **Domain Annotation**  
+   Protein domain boundaries are automatically retrieved from the Encyclopedia of Domains, allowing contacts to be classified as:
+   - Intra-domain
+   - Inter-domain
+
+6. **Contact Selection**  
+   By default, only the most C-terminal interacting partner for each residue is retained. This behavior can be changed to keep all contacts.
+
+---
+
+## Running the Script
+
+###  Requirements
+
+- **R** (≥ 4.0 recommended): https://cran.rstudio.com  
+- Internet access for AlphaFold data retrieval
+
+###  Input
+
+A plain text file containing UniProt IDs, one per line:
+
+```
+P23869
+Q9Y2X3
+P0A7V8
+```
+
+### Basic Usage
+
+```
+Rscript FoldDelay_script_new.R --input uniprot_ids.txt
+```
+
+###  Command-Line Options
+
+```
+-i, --input CHARACTER
+    Path to a text file containing UniProt identifiers.
+
+-t, --transrate NUMBER
+    Translation rate (aa/s). Default: 5
+
+-d, --distance NUMBER
+    Distance cutoff (Å). Default: 6
+
+-k, --keep BOOLEAN
+    TRUE  → keep all contacts
+    FALSE → keep only most C-terminal partner per residue (default)
+```
+
+###  Examples
+
+```
+Rscript FoldDelay_script_new.R   --input yeast_uniprot_ids.txt   --transrate 5   --distance 6 --keep TRUE
+```
+
+### Output
+
+The script generates an output CSV file with the following columns:
+
+- Residue–residue contacts
+- NFD estimates
+- Domain annotations
+- Confidence-filtered interactions
+
+---
+
+## Contact
+
 For any questions or further information, please contact: [ramonenrique.duranromana@kuleuven.be](mailto:ramonenrique.duranromana@kuleuven.be)
 
-## References
+---
+
+## Citation
+
 If you use this repository, please cite:
 Duran-Romana, R. et al. Native fold delay and its implications for co-translational chaperone binding and protein aggregation. Nature Communications 16, 1673 (2025). https://doi.org/10.1038/s41467-025-57033-z
-
-
