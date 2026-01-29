@@ -1,5 +1,4 @@
 # FoldDelay_script.R
-
 # Set the locale to English
 Sys.setenv(LANGUAGE = "en")
 # Suppress warning messages
