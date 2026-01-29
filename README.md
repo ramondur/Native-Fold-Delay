@@ -1,6 +1,6 @@
 # Native Fold Delay (NFD)
 
-This repository provides an R script to calculate Native Fold Delay (NFD) for proteins at proteome scale. The workflow is designed for AlphaFold-predicted structures and therefore requires UniProt identifiers to automatically retrieve the correct models and metadata.
+This repository provides an R script to calculate the Native Fold Delay (NFD) of proteins at proteome scale. The workflow is designed for AlphaFold-predicted structures and therefore requires UniProt identifiers to automatically retrieve the correct models and metadata.
 
 For users interested in single-protein analysis, including non-AlphaFold PDB structures, we also provide an interactive web server:
 
@@ -10,7 +10,7 @@ The web server supports NFD calculation as well as interactive analysis and visu
 
 ---
 
-## Repository Contents
+## Repository contents
 
 - `FoldDelay_script_new.R`  
   Main R script for large-scale NFD calculations using AlphaFold structures.
@@ -25,35 +25,35 @@ The web server supports NFD calculation as well as interactive analysis and visu
 
 ---
 
-## What the Script Does
+## What the script does
 
 When executed, the script performs the following steps:
 
-1. **Structure Retrieval**  
+1. **Structure retrieval**  
    Automatically downloads AlphaFold models and their corresponding Predicted Aligned Error (PAE) matrices from the AlphaFold Database for the provided UniProt IDs.
 
-2. **Contact Identification**  
+2. **Contact identification**  
    Identifies all residue–residue contacts within a specified distance cutoff (default: 6 Å), considering only N-terminal to C-terminal residue pairs.
 
-3. **Native Fold Delay Estimation**  
+3. **Native Fold Delay estimation**  
    For each contact, estimates the minimal time required for its formation by:
    - Computing the sequence separation between residues
    - Converting this separation into time using a global translation rate (default: 5 aa/s)
 
-4. **Confidence Filtering**  
+4. **Confidence filtering**  
    Contacts are filtered using PAE values to remove residue pairs with low positional confidence, reducing false-positive interactions.
 
-5. **Domain Annotation**  
+5. **Domain annotation**  
    Protein domain boundaries are automatically retrieved from the Encyclopedia of Domains, allowing contacts to be classified as:
    - Intra-domain
    - Inter-domain
 
-6. **Contact Selection**  
-   By default, only the most C-terminal interacting partner for each residue is retained. This behavior can be changed to keep all contacts.
+6. **Contact selection**  
+   By default, only the most C-terminal interacting partner for each residue is retained. This behavior can be changed to keep all contacts (see command-line options).
 
 ---
 
-## Running the Script
+## Running the script
 
 ###  Requirements
 
@@ -73,7 +73,7 @@ P0A7V8
 ### Basic Usage
 
 ```
-Rscript FoldDelay_script_new.R --input uniprot_ids.txt
+Rscript FoldDelay_script.R --input uniprot_ids.txt
 ```
 
 ###  Command-Line Options
@@ -96,17 +96,22 @@ Rscript FoldDelay_script_new.R --input uniprot_ids.txt
 ###  Examples
 
 ```
-Rscript FoldDelay_script_new.R   --input yeast_uniprot_ids.txt   --transrate 5   --distance 6 --keep TRUE
+Rscript FoldDelay_script.R --input yeast_uniprot_ids.txt --transrate 4 --distance 6 --keep TRUE
 ```
 
 ### Output
 
-The script generates an output CSV file with the following columns:
+The script generates an output CSV file with residue–residue contacts with the following columns:
 
-- Residue–residue contacts
-- NFD estimates
-- Domain annotations
-- Confidence-filtered interactions
+- **Index_1:** N-ter residue index
+- **Aa_1:** N-ter residue amino acid identity
+- **Index_2:** C-ter residue index
+- **Aa_2:** C-ter residue amino acid identity
+- **Distance:** Distance between the two residues in the primary sequence (aa)
+- **Time:** Estimated NFD time
+- **Cath_label:** Domain label (CATH label)
+- **Domain_id:** Domain id
+- **Scope:** Domain interaction type (intra- or inter-domain)
 
 ---
 
