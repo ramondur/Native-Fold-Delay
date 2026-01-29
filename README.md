@@ -96,7 +96,7 @@ Rscript FoldDelay_script.R --input uniprot_ids.txt
 ###  Examples
 
 ```
-Rscript FoldDelay_script.R --input yeast_uniprot_ids.txt --transrate 4 --distance 6 --keep TRUE
+Rscript FoldDelay_script.R --input yeast_uniprot_ids.txt --transrate 20 --distance 6 --keep TRUE
 ```
 
 ### Output
@@ -104,6 +104,7 @@ Rscript FoldDelay_script.R --input yeast_uniprot_ids.txt --transrate 4 --distanc
 The script produces a single CSV file, folddelay.csv, written to the current working directory. Each row represents a predicted residue-residue contact used in the Native Fold Delay calculation.
 The output contains the following columns:
 
+- **UniProt_id:** UniProt accession identifier of the protein.
 - **Index_1:** Index of the N-terminal residue involved in the contact
 - **Aa_1:** Amino acid identity of the N-terminal residue
 - **Index_2:** Index of the C-terminal residue involved in the contact
