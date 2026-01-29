@@ -12,7 +12,7 @@ The web server supports NFD calculation as well as interactive analysis and visu
 
 ## Repository contents
 
-- `FoldDelay_script_new.R`  
+- `FoldDelay_script.R`  
   Main R script for large-scale NFD calculations using AlphaFold structures.
 
 - `Duran&Houben2025/`  
