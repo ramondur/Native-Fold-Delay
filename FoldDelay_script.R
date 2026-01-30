@@ -243,7 +243,7 @@ for (i in 1:nrow(uniprot_ids)){
       ungroup()
   }
   fold_delay_nopae <- subset(simple, select = c(14,1:4,6,13,8,9,12))
-  colnames(fold_delay_nopae) <- c("UniProt_id","Index_1","Aa_1","Index_2","Aa_2","Distance","Time","Cath_label","Domain_id","Scope")
+  colnames(fold_delay_nopae) <- c("UniProt id","Index 1","Aa 1","Index 2","Aa 2","NFD (aa)","NFD (s)","Cath label","Domain id","Scope")
   fold_delay_list[[i]] <- fold_delay_nopae
   rm(pdb, simple)
   gc()
