@@ -110,7 +110,7 @@ The output contains the following columns:
 - **Index 2:** Index of the C-terminal residue involved in the contact
 - **Aa 2:** Amino acid identity of the C-terminal residue
 - **NFD (aa):** Sequence separation between the two residues (in amino acids)
-- **NFD (s):** Estimated Native Fold Delay (NFD) time for the contact, based on the specified translation rate
+- **NFD (s):** Estimated time for a residue-residue contact to become possible, computed from the sequence separation and the specified translation rate (in seconds)
 - **Cath label:** CATH domain classification assigned to the residue
 - **Domain ID:** Numeric identifier of the domain to which the residue belongs
 - **Scope:** Domain interaction type:
