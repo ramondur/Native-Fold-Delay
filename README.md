@@ -104,15 +104,15 @@ Rscript FoldDelay_script.R --input yeast_uniprot_ids.txt --transrate 20 --distan
 The script produces a single CSV file, folddelay.csv, written to the current working directory. Each row represents a predicted residue-residue contact used in the Native Fold Delay calculation.
 The output contains the following columns:
 
-- **UniProt_id:** UniProt accession identifier of the protein.
-- **Index_1:** Index of the N-terminal residue involved in the contact
-- **Aa_1:** Amino acid identity of the N-terminal residue
-- **Index_2:** Index of the C-terminal residue involved in the contact
-- **Aa_2:** Amino acid identity of the C-terminal residue
-- **Distance:** Sequence separation between the two residues (in amino acids)
-- **Time:** Estimated Native Fold Delay (NFD) time for the contact, based on the specified translation rate
-- **Cath_label:** CATH domain classification assigned to the residue
-- **Domain_id:** Numeric identifier of the domain to which the residue belongs
+- **UniProt id:** UniProt accession identifier of the protein.
+- **Index 1:** Index of the N-terminal residue involved in the contact
+- **Aa 1:** Amino acid identity of the N-terminal residue
+- **Index 2:** Index of the C-terminal residue involved in the contact
+- **Aa 2:** Amino acid identity of the C-terminal residue
+- **NFD (aa):** Sequence separation between the two residues (in amino acids)
+- **NFD (s):** Estimated Native Fold Delay (NFD) time for the contact, based on the specified translation rate
+- **Cath label:** CATH domain classification assigned to the residue
+- **Domain ID:** Numeric identifier of the domain to which the residue belongs
 - **Scope:** Domain interaction type:
   - `intra` — both residues belong to the same domain  
   - `inter` — residues belong to different domains
