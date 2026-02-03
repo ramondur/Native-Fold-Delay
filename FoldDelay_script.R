@@ -160,7 +160,6 @@ for (i in 1:nrow(uniprot_ids)){
   json_data <- fromJSON(readLines(con, warn = FALSE))
   close(con)
   domains <- json_data$data
-  domains <- domains[order(as.numeric(sub(".*TED", "", domains$ted_id))), ]
   #Initialise variables
   simple$Cath_label <- NA
   simple$domain_id <- NA
@@ -178,6 +177,7 @@ for (i in 1:nrow(uniprot_ids)){
     )
   } else {
     # Parse information on domains
+    domains <- domains[order(as.numeric(sub(".*TED", "", domains$ted_id))), ]
     domains <- subset(domains, select = c(5,15))
     expand_chopping_ranges <- function(domains) {
       expanded <- do.call(rbind, lapply(1:nrow(domains), function(i) {
@@ -206,7 +206,7 @@ for (i in 1:nrow(uniprot_ids)){
     }
     domain_ranges <- expand_chopping_ranges(domains)
   }
-  # Add domain information to dataframe
+  # Add domain information to data frame
   for (j in seq_len(nrow(domain_ranges))) {
     in_range_1 <- simple$index_1 >= domain_ranges$start[j] &
       simple$index_1 <= domain_ranges$end[j]
