@@ -228,7 +228,7 @@ for (i in 1:nrow(uniprot_ids)){
     temp_to <- simple$index_2[j]
     temp_pae <- json_matrix[temp_from,temp_to]
     if (temp_pae > distance) {
-      simple$flag[i] <- "Yes"
+      simple$flag[j] <- "Yes"
     }
   }
   simple <- subset(simple, flag == "No")
