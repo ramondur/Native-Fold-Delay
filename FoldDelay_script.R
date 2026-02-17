@@ -43,21 +43,21 @@ opt <- parse_args(opt_parser)
 transrate <- opt$transrate
 distance <- opt$distance
 keep <- opt$keep
-# Convert defaults from factory server
-if (!is.null(opt$input) && opt$input == "None") {
-  opt$input <- NULL
-}
 # If no file is provided give an error
 if (is.null(opt$input)) {
     print_help(opt_parser)
     stop("You must provide a text file containing UniProt identifier.", call. = FALSE)
 }
-#Read input file
-uniprot_ids <- read.table("~/Downloads/uniprot_ids.txt", quote="\"", comment.char="")
+opt_parser <- OptionParser(option_list = option_list)
+# Read UniProt IDs into a one-column dataframe
+uniprot_ids <- data.frame(
+  UniProtID = readLines(opt$input),
+  stringsAsFactors = FALSE
+)
 #Loop through all the structures
 fold_delay_list <- vector("list", length = nrow(uniprot_ids)) 
 for (i in 1:nrow(uniprot_ids)){
-  temp_uid <- toupper(trimws(uniprot_ids$V1[i]))
+  temp_uid <- toupper(trimws(uniprot_ids$UniProtID[i]))
   v_found <- NA_integer_
   file_name <- af_url <- NULL
   # try v20..v1; bump upper bound if needed
@@ -82,7 +82,7 @@ for (i in 1:nrow(uniprot_ids)){
     }
   }
   if (is.na(v_found)) {
-    message(sprintf("No AlphaFold PDB found for %s (v20..v1).", uid), call. = FALSE)
+    message(sprintf("No AlphaFold PDB found for %s (v20..v1).", temp_uid), call. = FALSE)
     next
   }
   message("Fetching structure from: ", af_url)
